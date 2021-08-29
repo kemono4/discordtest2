@@ -1,5 +1,9 @@
 import discord
 from discord.ext import commands
+import json
+
+with open('setting.json',mode='r',encoding='utf8') as jfile:
+    jdata = json.load(jfile)
 
 bot = commands.Bot(command_prefix= '{')
 
@@ -21,4 +25,9 @@ async def on_member_remove(member):
 async def ping (ctx):
     await ctx.send(f'{round(bot.latency*1000)} ms')
 
-bot.run('ODgxNTMzMjk2NDE1MjE1Njg2.YSuN2w.EzaaT3cDOCE58ej7ycEPbjIyxNo')
+@bot.command()
+async def pic(ctx):
+    pic = discord.File('/Users/kmno4/Documents/GitHub/discordtest2/.vscode/pic/中一中LOGO.jpg')
+    await ctx.send(file = pic)
+
+bot.run(jdata['token'])
