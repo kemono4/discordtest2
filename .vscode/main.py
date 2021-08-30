@@ -16,7 +16,7 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    channel = bot.get_channel(860026017535623168)
+    channel = bot.get_channel(881757019906932766)
     await channel.send(f'{member.mention}歡迎來到中一中音遊社伺服器！')
 
 @bot.event
