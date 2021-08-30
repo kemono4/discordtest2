@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import json
+import random
 intents = discord.Intents.default()
 intents.members = True
 
@@ -49,7 +50,8 @@ async def help(ctx):
 
 @bot.event
 async def on_message(msg):
-    if msg.content == 'hi' and msg.author != bot.user:
-        await msg.channel.send('hi')
+    keyword = ['hi','hello']
+    if msg.content in keyword and msg.author != bot.user:
+        await msg.channel.send(random.choice((keyword)))
 
 bot.run(jdata['token'])
