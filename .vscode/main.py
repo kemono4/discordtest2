@@ -49,7 +49,7 @@ async def help(ctx):
 
 @bot.event
 async def on_message(msg):
-    if msg.content == 'apple' and msg.author != self.bot.user:
+    if msg.content == 'hi' and msg.author != bot.user:
         await msg.channel.send('hi')
 
 bot.run(jdata['token'])
