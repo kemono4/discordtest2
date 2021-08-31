@@ -1,4 +1,8 @@
+from asyncio.tasks import create_task, sleep
+from os import sendfile
 import discord
+import asyncio
+from discord import channel
 from discord.ext import commands
 import json
 import random
@@ -10,7 +14,7 @@ intents.members = True
 with open('setting.json',mode='r',encoding='utf8') as jfile:
     jdata = json.load(jfile)
 
-bot = commands.Bot(command_prefix= '?',intents = intents)
+bot = commands.Bot(command_prefix= '{',intents = intents)
 
 @bot.event
 async def on_ready():
@@ -40,8 +44,7 @@ async def ping(ctx):
 
 @bot.command()
 async def pic(ctx):
-    pic = discord.File('/Users/kmno4/Documents/GitHub/discordtest2/.vscode/pic/中一中LOGO.jpg')
-    await ctx.send(file = pic)
+    await ctx.send('https://static.wikia.nocookie.net/popnmusic/images/c/ca/Mimi_Kaimei_Riddles_Portrait.png/revision/latest?cb=20201225055534')
 
 
 bot.remove_command('help')
@@ -56,6 +59,34 @@ async def rules(ctx):
     embed.add_field(name="社規第四條", value="社長發出成績圖時社員應當送出跪兔，乃維持社團內社長與社員的位階差異，維持社團運作。", inline=False)
     embed.add_field(name="社規第五條：", value="若社長要求觸及時請務必執行，此舉乃維持社長之自信心，穩固音遊社的中心支柱，使音遊社能繼續發揚光大。\n\n這些都是中一中音遊社員必遵守的規定", inline=False)
     await ctx.send(embed = embed)
+
+@bot.command()
+async def repeat(ctx,*,msg):
+    await ctx.message.delete()
+    await ctx.send(msg)
+
+@bot.command()
+async def purge(ctx,num:int):
+    await ctx.channel.purge(limit=num+1)
+
+
+
+async def interval():
+    await bot.wait_until_ready()
+    while not bot.is_closed():
+        channel = bot.get_channel(882102970928476231)
+        print(channel)
+        await channel.send('Running')
+        await asyncio.sleep(5)
+        
+@bot.command()
+async def set_channel(ctx,ch:int):
+    channel = bot.get_channel(ch)
+    await ctx.send(f'set channel{channel.mention}')
+           
+
+bg = bot.loop.create_task(interval())
+
 
 
 
