@@ -7,14 +7,12 @@ from discord.ext import commands
 import json
 import random
 import datetime
-intents = discord.Intents.default()
-intents.members = True
-
+intents = discord.Intents.all()
 
 with open('setting.json',mode='r',encoding='utf8') as jfile:
     jdata = json.load(jfile)
 
-bot = commands.Bot(command_prefix= '{',intents = intents)
+bot = commands.Bot(command_prefix= '?',intents = intents)
 
 @bot.event
 async def on_ready():
@@ -69,9 +67,20 @@ async def repeat(ctx,*,msg):
 async def purge(ctx,num:int):
     await ctx.channel.purge(limit=num+1)
 
+@bot.command()
+async def rsqu(ctx,num:int):
+    listol = []
+    for m in ctx.guild.members:
+        if str(m.status) == 'online'and m.bot == False:
+            listol.append(m.name)
+    listr = random.sample(listol,k=num)
+    await ctx.send(random.sample(listr,k=num))
+        
 
+       
+        
 
-async def interval():
+('''async def interval():
     await bot.wait_until_ready()
     while not bot.is_closed():
         channel = bot.get_channel(882102970928476231)
@@ -85,7 +94,7 @@ async def set_channel(ctx,ch:int):
     await ctx.send(f'set channel{channel.mention}')
            
 
-bg = bot.loop.create_task(interval())
+bg = bot.loop.create_task(interval())''')
 
 
 
